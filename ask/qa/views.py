@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_GET
-from ask.qa.models import Question, Answer
+from models import Question, Answer
 
 @require_GET
 def main_page(request):

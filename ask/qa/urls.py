@@ -1,12 +1,12 @@
 from django.urls import path
-from views import test
+from views import *
 
 urlpatterns = [
-    path("", test),
+    path("", main_page),
     path("login/", test),
     path("signup/", test),
-    path("question/<int:id>/", test),
+    path("question/<int:id>/", question, name="question"),
     path("ask/", test),
-    path("popular/", test),
+    path("popular/", popular, name="popular"),
     path("new/", test)
 ]

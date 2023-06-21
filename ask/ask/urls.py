@@ -9,6 +9,5 @@ urlpatterns = [
     path("question/<int:id>/", include("qa.urls")),
     path("ask/", include("qa.urls")),
     path("popular/", include("qa.urls")),
-    path("popular/", include("qa.urls")),
     path("new/", include("qa.urls"))
 ]

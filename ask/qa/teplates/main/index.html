@@ -1,0 +1,21 @@
+{% extends "layout/layout.html" %}
+{% block body %}
+    <h1>Questions</h1>
+    {% for question in page.object_list %}
+        <a href="/question/{{question.id}}">{{question.title}}</a>
+        <br>
+    {% endfor %}
+    <nav>
+        <ul>
+            {% for p in paginator.page_range %}
+                {% if p == page.number %}
+                    <li class="active">
+                {% else %}
+                    <li>
+                {% endif %}
+                <a href="{{paginator.baseurl}}{{p}}">{{p}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock body %}

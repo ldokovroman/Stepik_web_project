@@ -1,14 +1,14 @@
-{% extends "layout/layout.html" %}
+{% extends "base.html" %}
 {% block body %}
     <h1 class="mt-5">Question</h1>
-    <h2>{{question.title}}</h2>
-    <p>{{question.text}}</p>
+    <h2>{{ question.title }}</h2>
+    <p>{{ question.text }}</p>
     <section class="mt-3">
         <h2>Answers</h2>
         {% if answers %}
             {% for answer in answers %}
-                <p>{{answer.text}}</p>
-                <p>{{answer.author}}</p>
+                <p>{{ answer.text }}</p>
+                <p>{{ answer.author }}</p>
             {% endfor %}
         {% else %}
             <p>No answers</p>

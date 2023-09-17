@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block body %}
-    <h1 class="mt-5">Question</h1>
+    <h1>Question</h1>
     <h2>{{ question.title }}</h2>
     <p>{{ question.text }}</p>
-    <section class="mt-3">
+    <section>
         <h2>Answers</h2>
         {% if answers %}
             {% for answer in answers %}
@@ -13,5 +13,24 @@
         {% else %}
             <p>No answers</p>
         {% endif %}
-   </section>
+    </section>
+    <div style="height: 1px; background-color: black;"></div>
+    <section>
+        {% for erorr in form.non_field_errors %}
+            <div class="alert alert-danger">{{ erorr }}</div>
+        {% endif %}
+        <form class="form-horizontal" method="post" action="/question/{{question.id}}/">
+            {% csrf_token %}
+            <fieldset>
+                {% for field in form %}
+                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                        <label class="control-label">{{ field.label }}</label>
+                        <div class="controls">{{ field }}</div>
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <input type="hidden" name="question" id="id_question" value="{{ question.id }}">
+            <button type="submit" class="btn btn-primary">Answer</button>
+        </form>
+    </section>
 {% endblock body %}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-    <h1>Questions</h1>
+    <h1>New Questions</h1>
     {% for question in page.object_list %}
         <a href="/question/{{ question.id }}">{{ question.title }}</a>
         <br>

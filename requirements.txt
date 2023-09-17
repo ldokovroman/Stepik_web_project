@@ -1,3 +1,4 @@
-django==2.0
-mysqlclient
-gunicorn
+psycopg2-binary==2.9.7
+django==4.2.4
+pip==21.3.1
+gunicorn==21.2.0

@@ -1,2 +1,5 @@
 .idea/
 venv/
+local_settings.py
+init_for_stepik.sh
+update.sh

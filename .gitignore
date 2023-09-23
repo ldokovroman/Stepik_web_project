@@ -4,3 +4,4 @@ local_settings.py
 init_for_stepik.sh
 update.sh
 etc/ask_conf.py
+*.pyc

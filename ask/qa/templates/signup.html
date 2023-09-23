@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
-    <h1>New Question</h1>
+    <h1>Registration</h1>
     {% for erorr in form.non_field_errors %}
         <div class="alert alert-danger">{{ erorr }}</div>
     {% endfor %}
-    <form class="form-horizontal" method="post" action="{% url "ask" %}">
+    <form class="form-horizontal" method="post" action="{% url "sign_up" %}">
         {% csrf_token %}
         <fieldset>
             {% for field in form %}
@@ -14,8 +14,6 @@
                 </div>
             {% endfor %}
         </fieldset>
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">ASK!</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
    </form>
 {% endblock body %}

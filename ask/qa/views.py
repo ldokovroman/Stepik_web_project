@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_GET
+from django.contrib.auth import login
 from .models import Question, Answer
 from .forms import AskForm, AnswerForm
 
@@ -76,6 +77,20 @@ def ask(request):
     return render(request, "ask.html", {
         "form": form
     })
+
+def sign_up(request):
+    if request.method == "POST":
+        form = CreateUser(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect('/')
+    else:
+        form = CreateUser()
+    return render(request, "signup.html", {
+            "form": form
+    })
+
 
 def test(request, *args, **kwargs):
     return HttpResponse("OK")

@@ -2,7 +2,7 @@
 {% block body %}
     <h1>New Questions</h1>
     {% for question in page.object_list %}
-        <a href="/question/{{ question.id }}">{{ question.title }}</a>
+        <a href="{% url "question" question.id %}">{{ question.title }}</a>
         <br>
     {% endfor %}
     <nav>

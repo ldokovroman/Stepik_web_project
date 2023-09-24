@@ -3,7 +3,7 @@
 {% block body %}
     <link rel="stylesheet" href="{% static "css/index.css" %}">
     <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
-        <h2>New Questions</h2>
+        {% block title %}<h2>New Questions</h2>{% endblock %}
         <button class="btn btn-primary" onclick="document.location={% url "ask" %}">Ask a Question</button>
     </div>
     {% for question in page.object_list %}

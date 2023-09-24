@@ -22,14 +22,12 @@
         <form class="form-horizontal" method="post" action="{% url "question" question.id %}">
             {% csrf_token %}
             <fieldset>
-                {% for field in form %}
-                    <div class="form-group {% if field.errors %}has-error{% endif %}">
-                        <label class="control-label">{{ field.label }}</label>
-                        <div class="controls">{{ field }}</div>
-                    </div>
-                {% endfor %}
+                <div class="form-group {% if form.text.errors %}has-error{% endif %}">
+                    <label class="control-label">{{ form.text.label }}</label>
+                    <div class="controls">{{ form.text }}</div>
+                </div>
             </fieldset>
-            <input type="hidden" name="question" id="id_question" value="{{ question.id }}">
+            <input type="hidden" name="question_id" id="question_id" value="{{ question.id }}">
             <button type="submit" class="btn btn-primary">Answer</button>
         </form>
     </section>

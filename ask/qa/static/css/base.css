@@ -1,0 +1,24 @@
+.site__title {
+    color: darkorange;
+    text-decoration: none;
+}
+
+.site__title:hover {
+    color: chocolate;
+}
+
+.line {
+    height: 0.2em;
+    background-color: darkorange;
+}
+
+.user {
+    font-size: 1.5em;
+    text-decoration: none;
+    color: black;
+}
+
+.user:hover {
+    font-weight: bold;
+    color: black;
+}

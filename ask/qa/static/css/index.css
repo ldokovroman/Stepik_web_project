@@ -1,0 +1,31 @@
+h2 {
+    color: #0d6efd;
+}
+
+.question__title {
+    text-decoration: none;
+    color: black;
+}
+
+.question__title:hover {
+    color: black;
+    font-weight: bold;
+}
+
+.question__author {
+    text-decoration: none;
+    color: inherit;
+}
+
+.question__author:hover {
+    color: black;
+}
+
+.page__link {
+    color: #0d6efd;
+    margin-left: 0.3em;
+}
+
+.active__page {
+    font-weight: bold;
+}

@@ -3,19 +3,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
     <title>Q&A</title>
 </head>
-<body><!--header class='container mt-5'>
-         <form method='POST' action='/logout/'>
-            {% csrf_token %}
-            <button class='btn btn-danger rounded'>Выйти</button>
-         </form>
-      </header-->
+<body>
+    <header class="container mt-2 bg-light shadow border border-3 border-primary rounded p-2 d-flex justify-content-between align-items-center">
+        <h1><a href="{% url "main_page" %}" class="site__title">Questions & Answers</a></h1>
+        {% block registration %}
+            {% if user.id %}
+                <a href="" class="user">{{ user.get_username }}</a>
+                <form method="post" action="{% url "log_out" %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger">Log out</button>
+                </form>
+            {% else %}
+                <button class="btn btn-info" onclick="document.location={% url "log_in" %}">Log in</button>
+            {% endif %}
+        {% endblock %}
+    </header>
     <main>
-        <div class="container">
+        <div class="container mt-5">
+            <div class="line"></div>
             {% block body %}{% endblock body %}
         </div>
     </main>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-    <h1>Popular Questions</h1>
+    <h2>Popular Questions</h2>
     {% for question in page.object_list %}
         <a href="{% url "question" question.id %}">{{ question.title }}</a>
         <br>
@@ -13,7 +13,7 @@
                 {% else %}
                     <li>
                 {% endif %}
-                <a href="{{ paginator.baseurl }}{{ page_num }}">{{ page_num }}</a>
+                <a href="{% url "popular" %}?page={{ page_num }}">{{ page_num }}</a>
                 </li>
             {% endfor %}
         </ul>

@@ -20,6 +20,7 @@ class AskForm(forms.Form):
         return text
 
     def save(self):
+        self.cleaned_data["author"] = self.user
         question = Question(**self.cleaned_data)
         question.save()
         return question
@@ -27,7 +28,7 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea, label="Your answer")
-    question = forms.IntegerField(min_value=0)
+    question_id = forms.IntegerField(min_value=0)
 
     def clean_text(self):
         text = self.cleaned_data["text"]
@@ -36,24 +37,24 @@ class AnswerForm(forms.Form):
         return text
 
     def clean_question(self):
-        question_id = self.cleaned_data["question"]
+        question_id = self.cleaned_data["question_id"]
         try:
             question = Question.objects.get(id=question_id)
+            self.question = question
         except Question.DoesNotExist:
             raise forms.ValidationError("The question doesn't exist", code="invalid")
         return question.id
 
     def save(self):
-        question = Question.objects.get(id=self.cleaned_data["question"])
-        answer = Answer(text=self.cleaned_data["text"], question=question)
+        answer = Answer(text=self.cleaned_data["text"], question=self.question, author=self.user)
         answer.save()
         return answer
 
 
-class SignUpFrom(forms.Form):
-    username = forms.CharField(min_length=6, max_length=30, label="Username", required=True)
+class SignUpForm(forms.Form):
+    username = forms.CharField(min_length=6, max_length=30, label="Username")
     email = forms.EmailField(label="Email")
-    password = forms.CharField(widget=forms.PasswordInput, min_length=6, max_length=30, label="Password", required=True)
+    password = forms.CharField(widget=forms.PasswordInput, min_length=6, max_length=30, label="Password")
 
     def clean_username(self):
         username = self.cleaned_data["username"]
@@ -75,5 +76,5 @@ class SignUpFrom(forms.Form):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(min_length=6, max_length=30, label="Username", required=True)
-    password = forms.CharField(widget=forms.PasswordInput, min_length=6, max_length=30, label="Password", required=True)
+    username = forms.CharField(min_length=6, max_length=30, label="Username")
+    password = forms.CharField(widget=forms.PasswordInput, min_length=6, max_length=30, label="Password")

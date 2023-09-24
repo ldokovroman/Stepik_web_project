@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block body %}
+    <h1>Login</h1>
+    {% for erorr in form.non_field_errors %}
+        <div class="alert alert-danger">{{ erorr }}</div>
+    {% endfor %}
+    {% if login_error %}
+        <p class="alert alert-danger">{{ login_error}}</p>
+    {% endif %}
+    <form class="form-horizontal" method="post" action="{% url "log_in" %}">
+        {% csrf_token %}
+        <fieldset>
+            {% for field in form %}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label class="control-label">{{ field.label }}</label>
+                    <div class="controls">{{ field }}</div>
+                </div>
+            {% endfor %}
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+   </form>
+{% endblock body %}

@@ -69,6 +69,8 @@ def question(request, id):
 
 def ask(request):
     user = get_user(request)
+    if user.id is None:
+        return HttpResponseRedirect(reverse("log_in"))
     if user.id and request.method == "POST":
         form = AskForm(request.POST)
         if form.is_valid():
@@ -80,10 +82,10 @@ def ask(request):
         form = AskForm()
     return render(request, "ask.html", {
         "form": form,
-        "user": user
     })
 
 def sign_up(request):
+    user = get_user(request)
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -93,10 +95,12 @@ def sign_up(request):
     else:
         form = SignUpForm()
     return render(request, "signup.html", {
-            "form": form
+        "form": form,
+        "user": user
     })
 
 def log_in(request):
+    user = get_user(request)
     login_error = None
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -110,8 +114,9 @@ def log_in(request):
     else:
         form = LoginForm()
     return render(request, "login.html", {
-            "form": form,
-            "login_error": login_error
+        "form": form,
+        "login_error": login_error,
+        "user": user
     })
 
 @require_POST

@@ -2,10 +2,13 @@
 {% load static %}
 {% block body %}
     <link rel="stylesheet" href="{% static "css/index.css" %}">
-    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <section class="d-flex justify-content-between align-items-center mt-3 mb-3">
         {% block title %}<h2>New Questions</h2>{% endblock %}
-        <button class="btn btn-primary" onclick="document.location={% url "ask" %}">Ask a Question</button>
-    </div>
+        <div class="d-flex align-items-center">
+            {% block questions %}<button class="btn btn-primary" onclick="document.location='{% url "popular" %}'">Popular</button>{% endblock %}
+            <button class="btn btn-primary ask__btn" onclick="document.location='{% url "ask" %}'">Ask a Question</button>
+        </div>
+    </section>
     {% for question in page.object_list %}
         <div class="card mb-4">
             <div class="card-header">

@@ -4,39 +4,25 @@ from .models import Question, Answer
 
 
 class AskForm(forms.Form):
-    title = forms.CharField(max_length=255, label="Title")
-    text = forms.CharField(widget=forms.Textarea, label="Question")
+    title = forms.CharField(max_length=255, label="Title", required=True)
+    text = forms.CharField(widget=forms.Textarea, label="Question", required=True)
 
-    def clean_title(self):
-        title = self.cleaned_data["title"]
-        if not title:
-            raise forms.ValidationError("The title mustn't be empty", code="required")
-        return title
-
-    def clean_text(self):
-        text = self.cleaned_data["text"]
-        if not text:
-            raise forms.ValidationError("The question text mustn't be empty", code="required")
-        return text
+    title.widget.attrs.update({"class": "shadow border border-3 border-primary form__border col-md-8"})
+    text.widget.attrs.update({"class": "shadow border border-3 border-primary form__border col-md-12", "rows": 7})
 
     def save(self):
         self.cleaned_data["author"] = self.user
-        question = Question(**self.cleaned_data)
-        question.save()
+        question = Question.objects.create(**self.cleaned_data)
         return question
 
 
 class AnswerForm(forms.Form):
-    text = forms.CharField(widget=forms.Textarea, label="Your answer")
+    text = forms.CharField(widget=forms.Textarea, label="Your answer", required=True)
     question_id = forms.IntegerField(min_value=0)
 
-    def clean_text(self):
-        text = self.cleaned_data["text"]
-        if not text:
-            raise forms.ValidationError("The answer text mustn't be empty", code="required")
-        return text
+    text.widget.attrs.update({"class": "shadow border border-3 border-primary form__border col-md-6", "rows": 5})
 
-    def clean_question(self):
+    def clean_question_id(self):
         question_id = self.cleaned_data["question_id"]
         try:
             question = Question.objects.get(id=question_id)

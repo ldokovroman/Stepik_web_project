@@ -1,22 +1,30 @@
 {% extends "base.html" %}
-{% block body %}
-    <h1>Login</h1>
-    {% for erorr in form.non_field_errors %}
-        <div class="alert alert-danger">{{ erorr }}</div>
-    {% endfor %}
-    {% if login_error %}
-        <p class="alert alert-danger">{{ login_error}}</p>
+{% load static %}
+{% block registration %}
+    {% if user.id %}
+        <a href="" class="user">{{ user.get_username }}</a>
     {% endif %}
-    <form class="form-horizontal" method="post" action="{% url "log_in" %}">
-        {% csrf_token %}
-        <fieldset>
-            {% for field in form %}
-                <div class="form-group {% if field.errors %}has-error{% endif %}">
-                    <label class="control-label">{{ field.label }}</label>
-                    <div class="controls">{{ field }}</div>
-                </div>
-            {% endfor %}
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Sign in</button>
-   </form>
+    <button class="btn btn-primary" onclick="goBack()">Back</button>
+{% endblock %}
+{% block body %}
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+    <section class="d-flex flex-column align-items-center mt-3">
+        <h2>Login</h2>
+        {% if login_error %}
+            <p class="alert alert-danger">{{ login_error}}</p>
+        {% endif %}
+        <form method="post" action="{% url "log_in" %}">
+            {% csrf_token %}
+            <fieldset>
+                {% for field in form %}
+                    <label class="form-label mt-2">{{ field.label }}</label>
+                    <div class="shadow border border-3 border-primary">{{ field }}</div>
+                {% endfor %}
+            </fieldset>
+            <div class="d-flex justify-content-around align-items-center mt-4">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="button" class="btn btn-primary" onclick="document.location='{% url "sign_up" %}'">Sign up</button>
+            </div>
+        </form>
+    </section>
 {% endblock body %}

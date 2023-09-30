@@ -29,3 +29,7 @@ h2 {
 .active__page {
     font-weight: bold;
 }
+
+.ask__btn {
+    margin-left: 1em;
+}

@@ -53,7 +53,6 @@ def question(request, question_id):
         question = Question.objects.get(id=question_id)
     except Question.DoesNotExist:
         raise Http404
-    answers = question.answers.all()
     if request.method == "POST":
         if user.id is None:
             return HttpResponseRedirect(reverse("log_in"))
@@ -66,7 +65,7 @@ def question(request, question_id):
         form = AnswerForm()
         question.rating += 1
         question.save()
-
+    answers = question.answers.all()
     return render(request, "question.html", {
         "question": question,
         "answers": answers,

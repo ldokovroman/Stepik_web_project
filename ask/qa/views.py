@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth import login, authenticate, logout, get_user
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Question, Answer
 from .forms import AskForm, AnswerForm, SignUpForm, LoginForm
@@ -46,9 +47,16 @@ def popular(request):
         "user": user
     })
 
-def question(request, id):
+def question(request, question_id):
     user = get_user(request)
-    if user.id and request.method == "POST":
+    try:
+        question = Question.objects.get(id=question_id)
+    except Question.DoesNotExist:
+        raise Http404
+    answers = question.answers.all()
+    if request.method == "POST":
+        if user.id is None:
+            return HttpResponseRedirect(reverse("log_in"))
         form = AnswerForm(request.POST)
         if form.is_valid():
             form.user = user
@@ -56,15 +64,14 @@ def question(request, id):
             return HttpResponseRedirect(request.path)
     else:
         form = AnswerForm()
-    try:
-        question = Question.objects.get(id=id)
-    except Question.DoesNotExist:
-        raise Http404
-    answers = question.answers.all()
+        question.rating += 1
+        question.save()
+
     return render(request, "question.html", {
         "question": question,
         "answers": answers,
-        "form": form
+        "form": form,
+        "user": user
     })
 
 def ask(request):
@@ -123,3 +130,12 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return HttpResponseRedirect(reverse("log_in"))
+
+@login_required
+def delete_question(request, question_id):
+    try:
+        question = Question.objects.get(id=question_id)
+    except Question.DoesNotExist:
+        raise Http404
+    question.delete()
+    return HttpResponseRedirect(reverse("main_page"))

@@ -5,3 +5,16 @@ h2 {
 .form__border:focus {
     outline: none;
 }
+
+.question__author {
+    text-decoration: none;
+    color: inherit;
+}
+
+.question__author:hover {
+    color: black;
+}
+
+.back__btn {
+    margin-left: 1em;
+}

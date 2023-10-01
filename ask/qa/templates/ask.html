@@ -2,6 +2,7 @@
 {% load static %}
 {% block body %}
     <link rel="stylesheet" href="{% static "css/ask.css" %}">
+    <button class="btn btn-primary float-end mt-3" onclick="goBack()">Back</button>
     <section class="d-flex flex-column align-items-center mt-3">
         <h2>New Question</h2>
         <form class="mt-3" method="post" action="{% url "ask" %}">
@@ -13,7 +14,7 @@
                 {% endfor %}
             </fieldset>
             <div class="d-flex justify-content-around align-items-center">
-                <button type="submit" class="btn btn-primary">ASK!</button>
+                <button type="submit" class="btn btn-primary">Ask</button>
             </div>
        </form>
     </section>
